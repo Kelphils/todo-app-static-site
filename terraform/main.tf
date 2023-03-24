@@ -6,3 +6,20 @@ module "s3" {
   source = "./modules/s3"
 
 }
+
+module "acm" {
+  source = "./modules/acm"
+
+}
+
+module "cloudfront" {
+  source                     = "./modules/cloudfront"
+  acm_certificate_arn        = module.acm.acm_certificate_arn
+  s3_bucket_website_endpoint = module.s3.bucket_website_endpoint
+
+}
+
+module "dns" {
+  source = "./modules/dns"
+
+}

@@ -13,3 +13,4 @@ variable "project" {
   type        = string
   default     = "static-website-hosting"
 }
+

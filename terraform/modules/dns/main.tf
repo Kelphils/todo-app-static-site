@@ -16,9 +16,9 @@ resource "aws_route53_record" "root_record" {
   name    = var.root_domain_name
   type    = "A"
 
-  alias = {
-    name                   = "${var.cloudfront_distribution_domain_name}"
-    zone_id                = "${var.cloudfront_distribution_zone_id}"
+  alias {
+    name                   = var.cloudfront_distribution_domain_name
+    zone_id                = var.cloudfront_distribution_zone_id
     evaluate_target_health = false
   }
 }

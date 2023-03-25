@@ -49,7 +49,7 @@ resource "aws_s3_bucket_cors_configuration" "static-website-hosting" {
   cors_rule {
     allowed_headers = ["Authorization", "Content-Length"]
     allowed_methods = ["GET", "POST"]
-    allowed_origins = ["https://www.${var.www_domain_name}"]
+    allowed_origins = ["https://www.${var.root_domain_name}"]
     max_age_seconds = 3000
   }
 
@@ -66,7 +66,7 @@ resource "aws_s3_bucket_website_configuration" "static-website-hosting" {
   // The page to serve up if a request results in an error or a non-existing
   // page.
   error_document {
-    key = "error.html"
+    key = "index.html"
   }
 
   # routing_rule {
@@ -79,14 +79,22 @@ resource "aws_s3_bucket_website_configuration" "static-website-hosting" {
   # }
 }
 
+
 data "aws_iam_policy_document" "s3_policy" {
   statement {
+    sid       = "PublicReadGetObject"
+    effect    = "Allow"
     actions   = ["s3:GetObject"]
     resources = ["${aws_s3_bucket.static-website-hosting.arn}/*"]
 
     principals {
-      type        = "AWS"
-      identifiers = [aws_cloudfront_origin_access_identity.origin_access_identity.iam_arn]
+      type = "AWS"
+      # identifiers = ["*"]
+      # identifiers to only allow cloudfront to access s3 bucket
+
+
+
+      identifiers = [var.cloudfront_origin_access_identity_iam_arn]
     }
   }
 }
@@ -94,8 +102,4 @@ data "aws_iam_policy_document" "s3_policy" {
 resource "aws_s3_bucket_policy" "bucket_policy" {
   bucket = aws_s3_bucket.static-website-hosting.id
   policy = data.aws_iam_policy_document.s3_policy.json
-}
-
-resource "aws_cloudfront_origin_access_identity" "origin_access_identity" {
-  comment = "CloudFront Origin Access Identity for ${var.www_domain_name}"
 }

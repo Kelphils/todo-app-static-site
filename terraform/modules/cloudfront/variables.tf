@@ -15,3 +15,4 @@ variable "acm_certificate_arn" {
 variable "root_domain_name" {
   default = "todo.kelyinc.xyz"
 }
+

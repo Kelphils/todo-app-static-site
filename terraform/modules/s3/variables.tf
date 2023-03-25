@@ -19,3 +19,8 @@ variable "Owner" {
   type        = string
   default     = "Kelvin Obioha"
 }
+
+variable "cloudfront_origin_access_identity_iam_arn" {
+  type        = string
+  description = "The ARN of the CloudFront origin access identity"
+}

@@ -18,7 +18,7 @@ resource "aws_acm_certificate" "certificate" {
 
   // We also want the cert to be valid for the root domain even though we'll be
   // redirecting to the www. domain immediately.
-  subject_alternative_names = ["*.${var.root_domain_name}"]
+  subject_alternative_names = ["${var.root_domain_name}", "${var.www_domain_name}"]
 }
 
 

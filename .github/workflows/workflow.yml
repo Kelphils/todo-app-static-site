@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
   push:
     branches:
-     - main
+     - master
 
 permissions:
   id-token: write
@@ -19,6 +19,8 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 1
 
       #----------------------------------------------
       # ----- Authenticate With AWS Credentials -----
@@ -36,7 +38,7 @@ jobs:
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
         with:
-          terraform_version: ${{ inputs.terraform_version }}
+          terraform_version: 1.2.9
           terraform_wrapper: false
 
       - name: View versions of tools

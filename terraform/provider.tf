@@ -23,8 +23,8 @@ provider "aws" {
 
 #  configure the aws provider
 provider "aws" {
-  region  = "us-east-1"
-  profile = "default"
+  region = "us-east-1"
+  # profile = "default"
   default_tags {
     tags = {
       terraform = "ManagedBy-${var.Owner}-${var.project}"

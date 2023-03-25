@@ -2,7 +2,7 @@ data "aws_caller_identity" "current" {}
 
 resource "aws_s3_bucket" "static-website-hosting" {
   // Our bucket's name is going to be the same as our site's domain name.
-  bucket = var.www_domain_name
+  bucket = var.bucket_domain_name
   // Because we want our site to be available on the internet, we set this so
   // anyone can read this bucket.
   force_destroy = true

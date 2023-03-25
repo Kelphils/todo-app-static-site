@@ -76,7 +76,7 @@ jobs:
           # Export the bucket name variable to the environment for later use
           echo "S3_BUCKET_NAME=${S3_BUCKET_NAME}" >> $GITHUB_ENV
           echo "S3_BUCKET_NAME<<EOF" >> $GITHUB_ENV
-          echo "$S3_BUCKET_NAME" | sed 's/\./_/g' >> $GITHUB_ENV
+          echo "$S3_BUCKET_NAME" >> $GITHUB_ENV
           echo "EOF" >> $GITHUB_ENV
         shell: bash
 

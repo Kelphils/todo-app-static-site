@@ -71,9 +71,15 @@ jobs:
       - name: Get Bucket Name
         run: |
           cd terraform
-          export S3_BUCKET_NAME=$(terraform output s3_bucket_name | tr -d '"')
-          echo S3_BUCKET_NAME
+          # Get the S3 Bucket Name from terraform output
+          S3_BUCKET_NAME=$(terraform output s3_bucket_name | tr -d '"')
+          # Export the bucket name variable to the environment for later use
+          echo "S3_BUCKET_NAME=${S3_BUCKET_NAME}" >> $GITHUB_ENV
+          echo "S3_BUCKET_NAME<<EOF" >> $GITHUB_ENV
+          echo "$S3_BUCKET_NAME" | sed 's/\./_/g' >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
         shell: bash
+
 
     #------------------------------------------------------------------
     # ---------- Install Packages and Build Artifact ------------------
@@ -98,7 +104,7 @@ jobs:
         run: |
           cd app/build
           # Sync the build directory to the S3 bucket
-          aws s3 sync . s3://$S3_BUCKET_NAME --delete
+          aws s3 sync . s3://${{env.S3_BUCKET_NAME}} --delete
         shell: bash
   
     #----------------------------------------------

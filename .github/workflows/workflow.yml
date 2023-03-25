@@ -68,6 +68,12 @@ jobs:
         run: |
           cd terraform
           terraform apply -auto-approve
+      - name: Get Bucket Name
+        run: |
+          cd terraform
+          export S3_BUCKET_NAME=$(terraform output s3_bucket_name | tr -d '"')
+          echo S3_BUCKET_NAME
+        shell: bash
 
     #------------------------------------------------------------------
     # ---------- Install Packages and Build Artifact ------------------
@@ -91,7 +97,6 @@ jobs:
       - name: Upload Artifact to S3 Bucket
         run: |
           cd app/build
-          export S3_BUCKET_NAME=$(terraform output s3_bucket_name | tr -d '"')
           # Sync the build directory to the S3 bucket
           aws s3 sync . s3://$S3_BUCKET_NAME --delete
         shell: bash

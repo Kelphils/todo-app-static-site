@@ -1,28 +1,28 @@
 /* styles.css */
 
 .container {
-    /* display: flex;
+    display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     height: 100vh;
     background-color: turquoise;
     padding: 20px;
-    border-radius: 5px; */
+    border-radius: 5px;
 
   }
   
   .todo-input {
-    /* padding: 10px;
+    padding: 10px;
     font-size: 1.2rem;
     box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
     border: none;
     border-radius: 5px 0 0 5px;
-    margin-right: -5px; */
+    margin-right: -5px;
   }
   
   .todo-button {
-    /* padding: 10px;
+    padding: 10px;
     font-size: 1.2rem;
     border-radius: 0 5px 5px 0;
     border: none;
@@ -30,15 +30,15 @@
     background-color: #4caf50;
     color: white;
     box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
-    cursor: pointer; */
+    cursor: pointer;
   }
   
   .todo-button:hover {
-    /* background-color: #3e8e41; */
+    background-color: #3e8e41;
   }
   
   .clear-button {
-    /* padding: 10px;
+    padding: 10px;
     font-size: 1.2rem;
     border-radius: 5px;
     border: none;
@@ -46,17 +46,17 @@
     background-color: rgb(217, 91, 133);
     color: white;
     box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
-    cursor: pointer; */
+    cursor: pointer;
   }
   
   .clear-button:hover {
-    /* background-color: rgb(228, 42, 104); */
+    background-color: rgb(228, 42, 104);
   }
   
   .todo-count {
-    /* margin-top: 12px;
+    margin-top: 12px;
     font-size: 1.2rem;
     text-decoration: wavy;
-    font-family: 'Courier New', Courier, monospace; */
+    font-family: 'Courier New', Courier, monospace;
   }
   

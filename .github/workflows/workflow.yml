@@ -39,7 +39,7 @@ jobs:
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
         with:
-          terraform_version: 1.2.9
+          terraform_version: 1.3.7
           terraform_wrapper: false
 
       - name: View versions of tools
@@ -69,14 +69,17 @@ jobs:
           cd terraform
           terraform apply -auto-approve
       - name: Get Bucket Name
+        id: static-bucket
         run: |
           cd terraform
           # Get the S3 Bucket Name from terraform output
-          S3_BUCKET_NAME=$(terraform output s3_bucket_name | tr -d '"')
+          export S3_BUCKET_NAME=$(terraform output s3_bucket_name | tr -d '"') 
+          echo "S3 Bucket Name: $S3_BUCKET_NAME"
+          # echo "S3_BUCKET_NAME=$(terraform output s3_bucket_name | tr -d '"')" >> $GITHUB_OUTPUT
           # Clean the output by removing any unwanted characters
-          S3_BUCKET_NAME=$(echo "$S3_BUCKET_NAME" | sed 's/[^A-Za-z0-9_-]//g')
+          # S3_BUCKET_NAME=$(echo "$S3_BUCKET_NAME" | sed 's/[^A-Za-z0-9_-]//g')
           # Export the bucket name variable to the environment for later use
-          echo "S3_BUCKET_NAME=${S3_BUCKET_NAME}" >> $GITHUB_ENV
+          # echo "S3_BUCKET_NAME=$(terraform output s3_bucket_name | tr -d '"')" >> $GITHUB_ENV
         shell: bash
 
 
@@ -101,9 +104,14 @@ jobs:
     #------------------------------------------------------------------
       - name: Upload Artifact to S3 Bucket
         run: |
-          cd app/build
-          # Sync the build directory to the S3 bucket
-          aws s3 sync . s3://${{env.S3_BUCKET_NAME}} --delete
+          cd terraform
+          export S3_BUCKET_NAME=$(terraform output s3_bucket_name | tr -d '"')
+
+           # Sync the build directory to the S3 bucket
+          cd $GITHUB_WORKSPACE
+          echo $S3_BUCKET_NAME
+          aws s3 sync app/build/ s3://$S3_BUCKET_NAME --delete
+          # aws s3 sync . s3://${{ steps.static-bucket.outputs.S3_BUCKET_NAME }} --delete
         shell: bash
   
     #----------------------------------------------

@@ -73,14 +73,13 @@ jobs:
         run: |
           cd terraform
           # Get the S3 Bucket Name from terraform output
-          export S3_BUCKET_NAME=$(terraform output s3_bucket_name | tr -d '"') 
+          export S3_BUCKET_NAME=$(terraform output -raw s3_bucket_name | tr -d '"') 
           echo "S3 Bucket Name: $S3_BUCKET_NAME"
           # echo "S3_BUCKET_NAME=$(terraform output s3_bucket_name | tr -d '"')" >> $GITHUB_OUTPUT
           # Clean the output by removing any unwanted characters
           # S3_BUCKET_NAME=$(echo "$S3_BUCKET_NAME" | sed 's/[^A-Za-z0-9_-]//g')
           # Export the bucket name variable to the environment for later use
           # echo "S3_BUCKET_NAME=$(terraform output s3_bucket_name | tr -d '"')" >> $GITHUB_ENV
-        shell: bash
 
 
     #------------------------------------------------------------------
@@ -97,7 +96,6 @@ jobs:
           cd app
           npm install
           npm run build
-        shell: bash
 
     #------------------------------------------------------------------
     # ----- Upload Artifact to S3 Bucket for specific environment -----
@@ -112,7 +110,6 @@ jobs:
           echo $S3_BUCKET_NAME
           aws s3 sync app/build/ s3://$S3_BUCKET_NAME --delete
           # aws s3 sync . s3://${{ steps.static-bucket.outputs.S3_BUCKET_NAME }} --delete
-        shell: bash
   
     #----------------------------------------------
     #-------Deploy App to S3 Bucket----------------

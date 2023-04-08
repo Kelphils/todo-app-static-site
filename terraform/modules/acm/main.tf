@@ -11,7 +11,7 @@ data "aws_route53_zone" "base_dns" {
 # SSL Certificate
 resource "aws_acm_certificate" "certificate" {
   // We want a wildcard cert so we can host subdomains later.
-  domain_name = "*.${var.www_domain_name}"
+  domain_name = "*.${var.root_domain_name}"
   provider    = aws.acm_provider
   #   validation_method         = "EMAIL"
   validation_method = "DNS"

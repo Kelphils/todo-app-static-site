@@ -10,7 +10,7 @@ terraform {
 
   backend "s3" {
     bucket = "static-website-hosting-terraform-state"
-    key    = "modules/infra/terraform.tfstate"
+    key    = "modules/static-hosting/terraform.tfstate"
 
   }
 }
